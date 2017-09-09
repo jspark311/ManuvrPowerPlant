@@ -62,7 +62,12 @@ const BQ24155Opts charger_opts(
   15   // ISEL
 );
 
-StringBuilder local_log;
+const PowerPlantOpts powerplant_opts(
+  22,  // 2.5v select pin.
+  23,  // Aux regulator enable pin.
+  DIGITAB_PMU_FLAG_ENABLED | DIGITAB_PMU_FLAG_V_25  // Regulator enabled @2.5v
+);
+
 
 Kernel* kernel = nullptr;
 
@@ -114,7 +119,7 @@ void loop() {
   LTC294x gas_gauge(&gas_gauge_opts);
   i2c.addSlaveDevice((I2CDeviceWithRegisters*) &gas_gauge);
 
-  PMU pmu(&charger, &gas_gauge);
+  PMU pmu(&charger, &gas_gauge, &powerplant_opts);
   kernel->subscribe((EventReceiver*) &pmu);
 
   ADP8866 leds(&adp_opts);
