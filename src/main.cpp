@@ -50,8 +50,15 @@ const ADP8866Pins adp_opts(
   20   // IO18 (IRQ)
 );
 
+const BatteryOpts battery_opts (
+  2600,    // We will assume a common 18650 for now. 2600mAh capacity.
+  3.6f,    // Battery dead (in volts)
+  3.75f,   // Battery weak (in volts)
+  4.15f,   // Battery float (in volts)
+  4.3f     // Battery max (in volts)
+);
+
 const LTC294xOpts gas_gauge_opts(
-  2600,  // We will assume a common 18650 for now. 2600mAh capacity.
   16,    // IO13 (Alert pin)
   LTC294X_OPT_ACD_AUTO | LTC294X_OPT_INTEG_SENSE
 );
@@ -116,10 +123,10 @@ void loop() {
   BQ24155 charger(&charger_opts);
   i2c.addSlaveDevice((I2CDeviceWithRegisters*) &charger);
 
-  LTC294x gas_gauge(&gas_gauge_opts);
+  LTC294x gas_gauge(&gas_gauge_opts, battery_opts.capacity);
   i2c.addSlaveDevice((I2CDeviceWithRegisters*) &gas_gauge);
 
-  PMU pmu(&charger, &gas_gauge, &powerplant_opts);
+  PMU pmu(&charger, &gas_gauge, &powerplant_opts, &battery_opts);
   kernel->subscribe((EventReceiver*) &pmu);
 
   ADP8866 leds(&adp_opts);
