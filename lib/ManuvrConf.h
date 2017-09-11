@@ -19,13 +19,13 @@ This is where definition of (application or device)-specific parameters ought to
 /*
 * Particulars of this platform.
 */
-#define PLATFORM_RNG_CARRY_CAPACITY       10    // How many random numbers should be cached? Must be > 0.
+#define PLATFORM_RNG_CARRY_CAPACITY      8    // How many random numbers should be cached? Must be > 0.
 #define MANUVR_SUPPORT_I2C
 
 /*
 * Kernel options.
 */
-#define EVENT_MANAGER_PREALLOC_COUNT     8
+#define EVENT_MANAGER_PREALLOC_COUNT     4
 #define SCHEDULER_MAX_SKIP_BEFORE_RESET  6
 
 /*
@@ -48,7 +48,7 @@ This is where definition of (application or device)-specific parameters ought to
 
 #define CONFIG_MANUVR_BQ24155
 #define CONFIG_MANUVR_LTC294X
-#define CONFIG_MANUVR_BENCHMARKS
+//#define CONFIG_MANUVR_BENCHMARKS
 
 /*
 * Debugging and console options.

@@ -51,11 +51,11 @@ const ADP8866Pins adp_opts(
 );
 
 const BatteryOpts battery_opts (
-  2600,    // We will assume a common 18650 for now. 2600mAh capacity.
-  3.6f,    // Battery dead (in volts)
-  3.75f,   // Battery weak (in volts)
+  1400,    // Battery capacity (in mAh)
+  3.60f,   // Battery dead (in volts)
+  3.70f,   // Battery weak (in volts)
   4.15f,   // Battery float (in volts)
-  4.3f     // Battery max (in volts)
+  4.2f     // Battery max (in volts)
 );
 
 const LTC294xOpts gas_gauge_opts(
@@ -66,7 +66,9 @@ const LTC294xOpts gas_gauge_opts(
 const BQ24155Opts charger_opts(
   68,  // Sense resistor is 68 mOhm.
   14,  // STAT
-  15   // ISEL
+  15,  // ISEL
+  BQ24155USBCurrent::LIMIT_800,  // Hardware limits (if any) on source draw..
+  BQ24155_FLAG_ISEL_HIGH  // We want to start the ISEL pin high.
 );
 
 const PowerPlantOpts powerplant_opts(
